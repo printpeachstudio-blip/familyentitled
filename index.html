@@ -920,5 +920,17 @@
     </div>
   </footer>
 
+  <!-- Cookie consent banner -->
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1a1a18;color:#e5e3db;padding:16px 24px;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid #333;">
+    <p style="font-size:13px;line-height:1.5;flex:1;min-width:260px;font-family:'DM Sans',sans-serif;">
+      We use cookies to understand how people use this site (Google Analytics). No personal data from the entitlements tool is ever tracked.
+      <a href="privacy.html" style="color:#1d9e87;text-decoration:none;margin-left:4px;">Privacy policy →</a>
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="feDeclineCookies()" style="padding:9px 18px;background:transparent;border:1px solid #555;color:#9ca3af;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;white-space:nowrap;">Decline</button>
+      <button onclick="feAcceptCookies()" style="padding:9px 18px;background:#0d6b5e;border:none;color:white;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;white-space:nowrap;">Accept cookies</button>
+    </div>
+  </div>
+  <script src="cookie-consent.js"></script>
 </body>
 </html>
