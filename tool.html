@@ -138,7 +138,7 @@ function calculate(ans){
   let total=0;
 
   // Child Benefit
-  const cbGross=26.05*52+Math.max(0,n-1)*17.25*52;
+  const cbGross=27.50*52+Math.max(0,n-1)*17.90*52;
   let cbNet=cbGross,cbNote="";
   if(higher>80000){
     cbNet=0;cbNote="Fully clawed back as income exceeds £80,000.";
@@ -151,7 +151,7 @@ function calculate(ans){
   }
   if(cbNet>0) total+=cbNet;
   ents.push({name:"Child Benefit",icon:"👶",ic:"ic-teal",
-    desc:`£26.05/week for your first child, £17.25 for each additional.${cbNote?" "+cbNote:""}`,
+    desc:`£27.50/week for your first child, £17.90 for each additional.${cbNote?" "+cbNote:""}`,
     val:cbNet>0?fmt(cbNet)+"/yr":"Clawed back via tax",vc:cbNet>0?"":"am",
     status:"claim",badge:"Apply if not claiming",url:"https://www.gov.uk/child-benefit",p:1});
 
