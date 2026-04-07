@@ -3,113 +3,510 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Find out every government entitlement your family is entitled to — free childcare hours, Child Benefit, free school meals and more. Takes under 3 minutes.">
+  <meta name="description" content="Find out every government entitlement your family is entitled to. Takes under 3 minutes.">
   <title>Check Your Family Entitlements — FamilyEntitled</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <!-- React + Babel for development. Replace with Vite build for production. -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #fafaf8; min-height: 100vh; }
-    #root { min-height: 100vh; }
-    .tool-nav {
-      background: rgba(250,250,247,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid #e2e0d8;
-      padding: 0 24px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .tool-nav-inner {
-      max-width: 760px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
-    .tool-nav-logo {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: #0d6b5e;
-      text-decoration: none;
-    }
-    .tool-nav-logo span { font-style: italic; font-weight: 400; color: #141412; }
-    .tool-nav-back {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: #8a8a82;
-      text-decoration: none;
-    }
-    .tool-nav-back:hover { color: #0d6b5e; }
-    /* Ad slots */
-    .ad-slot {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 16px 24px 0;
-      text-align: center;
-    }
-    .ad-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      color: #c0beb4;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 4px;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:#fafaf8;color:#111827;min-height:100vh;}
+    nav{position:sticky;top:0;z-index:100;background:rgba(250,250,247,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #e5e7eb;padding:0 24px;}
+    .nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;}
+    .nav-logo{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:700;color:#0d6b5e;text-decoration:none;}
+    .nav-logo span{font-style:italic;font-weight:400;color:#111827;}
+    .nav-back{font-family:'DM Sans',sans-serif;font-size:13px;color:#9ca3af;text-decoration:none;}
+    .nav-back:hover{color:#0d6b5e;}
   </style>
 </head>
 <body>
 
-  <nav class="tool-nav">
-    <div class="tool-nav-inner">
-      <a href="index.html" class="tool-nav-logo">Family<span>Entitled</span></a>
-      <a href="index.html" class="tool-nav-back">← Home</a>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Family<span>Entitled</span></a>
+    <a href="index.html" class="nav-back">Home</a>
+  </div>
+</nav>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useRef } = React;
+
+const css = `
+.app{max-width:680px;margin:0 auto;padding:0 20px 80px;}
+.hdr{padding:48px 0 40px;border-bottom:1px solid #e5e7eb;margin-bottom:40px;}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#0d6b5e;margin-bottom:12px;}
+.hdr h1{font-family:'Libre Baskerville',serif;font-size:clamp(24px,5vw,36px);font-weight:400;line-height:1.2;color:#111827;margin-bottom:12px;}
+.hdr p{font-size:15px;color:#4b5563;line-height:1.6;font-weight:300;}
+.prog-wrap{margin-bottom:40px;}
+.prog-lbl{font-size:12px;color:#9ca3af;margin-bottom:8px;}
+.prog-bar{height:2px;background:#e5e7eb;border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:#0d6b5e;border-radius:2px;transition:width .5s ease;}
+.phase{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#1d9e87;margin-bottom:8px;}
+.qtext{font-family:'Libre Baskerville',serif;font-size:clamp(19px,4vw,25px);font-weight:400;line-height:1.3;color:#111827;margin-bottom:8px;}
+.qhint{font-size:14px;color:#4b5563;line-height:1.5;margin-bottom:28px;font-weight:300;}
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px;}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;}
+.opt-btn{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#ffffff;border:1.5px solid #e5e7eb;border-radius:10px;cursor:pointer;text-align:left;transition:all .15s;font-family:'DM Sans',sans-serif;font-size:15px;color:#111827;font-weight:400;width:100%;}
+.opt-btn:hover{border-color:#1d9e87;background:#e8f5f2;}
+.opt-btn.sel{border-color:#0d6b5e;background:#e8f5f2;color:#0d6b5e;font-weight:500;}
+.chk{width:18px;height:18px;border-radius:50%;border:1.5px solid #e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.opt-btn.sel .chk{background:#0d6b5e;border-color:#0d6b5e;}
+.pill-btn{padding:10px 18px;background:#ffffff;border:1.5px solid #e5e7eb;border-radius:100px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;color:#111827;font-weight:400;transition:all .15s;white-space:nowrap;}
+.pill-btn:hover{border-color:#1d9e87;background:#e8f5f2;}
+.pill-btn.sel{border-color:#0d6b5e;background:#0d6b5e;color:#ffffff;font-weight:500;}
+.dob-row{display:flex;gap:10px;margin-bottom:14px;align-items:center;}
+.dob-lbl{font-size:14px;font-weight:500;color:#111827;min-width:64px;}
+.inp{padding:13px 15px;font-family:'DM Sans',sans-serif;font-size:15px;color:#111827;background:#ffffff;border:1.5px solid #e5e7eb;border-radius:10px;outline:none;transition:border-color .15s;margin-bottom:10px;}
+.inp:focus{border-color:#0d6b5e;}
+.inp-full{width:100%;}
+.next-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#0d6b5e;color:#ffffff;border:none;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;transition:all .15s;margin-top:8px;}
+.next-btn:hover{background:#0a5a4f;}
+.next-btn:disabled{background:#e5e7eb;color:#9ca3af;cursor:not-allowed;}
+.back-btn{background:none;border:none;color:#9ca3af;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;padding:0;margin-bottom:32px;display:flex;align-items:center;gap:6px;}
+.back-btn:hover{color:#111827;}
+.res-hdr{padding:32px 0 28px;border-bottom:1px solid #e5e7eb;margin-bottom:32px;}
+.res-hdr h2{font-family:'Libre Baskerville',serif;font-size:clamp(20px,4vw,28px);font-weight:400;margin-bottom:8px;}
+.total{font-family:'Libre Baskerville',serif;font-size:clamp(36px,8vw,54px);font-weight:700;color:#0d6b5e;line-height:1;margin:14px 0 6px;}
+.total-lbl{font-size:14px;color:#4b5563;font-weight:300;}
+.sec-title{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid #e5e7eb;}
+.ent-card{background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+.ent-card.hi{border-color:#1d9e87;background:#e8f5f2;}
+.ent-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.ic-green{background:#dcfce7;}.ic-teal{background:#e8f5f2;}.ic-amber{background:#fef3c7;}.ic-red{background:#fef2f2;}
+.ent-body{flex:1;}
+.ent-name{font-size:15px;font-weight:500;color:#111827;margin-bottom:3px;}
+.ent-desc{font-size:13px;color:#4b5563;line-height:1.5;font-weight:300;margin-bottom:8px;}
+.ent-val{font-size:18px;font-weight:600;color:#0d6b5e;}
+.ent-val.am{color:#b45309;}
+.badge{font-size:11px;font-weight:500;padding:3px 8px;border-radius:100px;display:inline-block;margin-left:8px;}
+.b-check{background:#dcfce7;color:#166534;}.b-claim{background:#fef3c7;color:#92400e;}.b-no{background:#fee2e2;color:#991b1b;}
+.alert{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:16px 20px;margin-bottom:10px;font-size:14px;line-height:1.6;color:#78350f;}
+.alert strong{font-weight:600;color:#92400e;}
+.act-card{background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 20px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+.act-num{width:28px;height:28px;border-radius:50%;background:#0d6b5e;color:white;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.act-body{flex:1;}
+.act-title{font-size:14px;font-weight:500;color:#111827;margin-bottom:4px;}
+.act-detail{font-size:13px;color:#4b5563;line-height:1.5;font-weight:300;}
+.act-link{display:inline-block;margin-top:6px;font-size:13px;color:#0d6b5e;font-weight:500;text-decoration:none;}
+.act-dl{font-size:11px;font-weight:500;padding:2px 8px;border-radius:100px;background:#fef3c7;color:#92400e;margin-top:6px;display:inline-block;}
+.tl-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #e5e7eb;}
+.tl-item:last-child{border-bottom:none;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:#1d9e87;flex-shrink:0;margin-top:5px;}
+.tl-when{font-size:12px;font-weight:500;color:#0d6b5e;margin-bottom:2px;}
+.tl-what{font-size:13px;color:#4b5563;}
+.restart{margin-top:32px;background:none;border:1.5px solid #e5e7eb;color:#4b5563;padding:12px 24px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all .15s;}
+.restart:hover{border-color:#111827;color:#111827;}
+.disc{font-size:12px;color:#9ca3af;line-height:1.6;margin-top:48px;padding-top:24px;border-top:1px solid #e5e7eb;}
+.opt-desc{display:block;font-size:12px;color:#6b7280;margin-top:2px;font-weight:400;}
+`;
+
+function getAge(dob){
+  if(!dob) return null;
+  const today=new Date(), birth=new Date(dob);
+  const months=(today.getFullYear()-birth.getFullYear())*12+(today.getMonth()-birth.getMonth());
+  return {months,years:Math.floor(months/12)};
+}
+function isPreschool(dob){const a=getAge(dob);return a&&a.months>=9&&a.years<4;}
+function isSchoolAge(dob){const a=getAge(dob);return a&&a.years>=4&&a.years<16;}
+function bandMid(b){return {under20:15000,"20to40":30000,"40to60":50000,"60to80":70000,"80to100":90000,over100:110000}[b]||30000;}
+function fmt(n){return "£"+Math.round(n).toLocaleString("en-GB");}
+
+function calculate(ans){
+  const{numChildren,childDOBs,householdType,myIncome,partnerIncome,workingStatus,currentBenefits,hasFSM,childcareHours,childcareRate}=ans;
+  const isSingle=householdType==="single";
+  const myMid=bandMid(myIncome);
+  const partMid=isSingle?0:bandMid(partnerIncome||"under20");
+  const higher=Math.max(myMid,partMid);
+  const onUC=(currentBenefits||[]).includes("uc");
+  const onLegacy=(currentBenefits||[]).includes("legacy");
+  const bothWorking=["both","parental","self"].includes(workingStatus);
+  const over100k=myMid>100000||(!isSingle&&partMid>100000);
+  const n=parseInt(numChildren)||1;
+  const preschool=(childDOBs||[]).filter(isPreschool);
+  const school=(childDOBs||[]).filter(isSchoolAge);
+  const ents=[],flags=[],actions=[],timeline=[];
+  let total=0;
+
+  // Child Benefit
+  const cbGross=26.05*52+Math.max(0,n-1)*17.25*52;
+  let cbNet=cbGross,cbNote="";
+  if(higher>80000){
+    cbNet=0;cbNote="Fully clawed back as income exceeds £80,000.";
+    flags.push({type:"warning",text:`Even though Child Benefit (${fmt(cbGross)}/yr) is fully clawed back, still claim it — it protects your National Insurance record and state pension.`});
+  } else if(higher>60000){
+    const pct=(higher-60000)/20000;
+    cbNet=cbGross*(1-pct);
+    cbNote=`After the High Income Charge taper you keep ${fmt(cbNet)}/yr.`;
+    flags.push({type:"tip",text:`Pension tip: contributing ${fmt(higher-60000)} into your pension annually would bring your adjusted net income below £60,000 and restore the full ${fmt(cbGross-cbNet)}/yr in Child Benefit.`});
+  }
+  if(cbNet>0) total+=cbNet;
+  ents.push({name:"Child Benefit",icon:"👶",ic:"ic-teal",
+    desc:`£26.05/week for your first child, £17.25 for each additional.${cbNote?" "+cbNote:""}`,
+    val:cbNet>0?fmt(cbNet)+"/yr":"Clawed back via tax",vc:cbNet>0?"":"am",
+    status:"claim",badge:"Apply if not claiming",url:"https://www.gov.uk/child-benefit",p:1});
+
+  // Free childcare
+  if(preschool.length>0){
+    const hrs=parseInt(childcareHours)||30;
+    const rate=parseFloat(childcareRate)||8;
+    const freeHrs=(bothWorking&&!over100k)?30:15;
+    if(over100k){
+      flags.push({type:"critical",text:`One parent earns over £100,000 — this removes eligibility for extended free childcare hours and Tax-Free Childcare. Pension contributions to bring adjusted net income below £100,000 could restore up to £7,500+/yr.`});
+      ents.push({name:"Free childcare hours",icon:"🏫",ic:"ic-red",
+        desc:"Not eligible — income over £100,000. Pension contributions may restore eligibility.",
+        val:"Not eligible",vc:"am",status:"no",badge:"Income too high",url:null,p:99});
+    } else {
+      const val=freeHrs*38*rate*preschool.length;
+      total+=val;
+      ents.push({name:`${freeHrs} hours free childcare`,icon:"🏫",ic:"ic-teal",hi:true,
+        desc:`${freeHrs} hrs/week for 38 weeks per pre-school child. At £${rate}/hr this saves ${fmt(val)}/yr.`,
+        val:fmt(val)+"/yr",vc:"",status:"claim",badge:"Apply via HMRC",
+        url:"https://www.gov.uk/apply-free-childcare-if-youre-working",p:1});
+      actions.push({num:1,title:`Apply for ${freeHrs} hours free childcare`,
+        detail:"Apply through your HMRC childcare account. You'll get a code to give your nursery. Must reconfirm every 3 months.",
+        url:"https://www.gov.uk/apply-free-childcare-if-youre-working",
+        dl:"Apply at least 6 weeks before you need the hours"});
+    }
+    if(!over100k&&!onUC&&bothWorking){
+      const tfc=Math.min(Math.max(0,hrs-30)*rate*52*0.2,2000*preschool.length);
+      total+=tfc;
+      ents.push({name:"Tax-Free Childcare",icon:"💰",ic:"ic-green",
+        desc:"Government adds 20p for every 80p you pay. Up to £2,000/child/yr on top of free hours.",
+        val:fmt(tfc)+"/yr",vc:"",status:"claim",badge:"Apply via GOV.UK",
+        url:"https://www.gov.uk/tax-free-childcare",p:2});
+    }
+    if(onUC&&bothWorking){
+      const ucVal=Math.min(hrs*rate*52*0.85,1014.63*12);
+      total+=ucVal;
+      ents.push({name:"Universal Credit childcare",icon:"💰",ic:"ic-green",
+        desc:"Claim back 85% of registered childcare costs through UC. Cannot combine with Tax-Free Childcare — usually worth more for UC claimants.",
+        val:fmt(ucVal)+"/yr",vc:"",status:"claim",badge:"Claim via UC journal",
+        url:"https://www.gov.uk/guidance/universal-credit-childcare-costs",p:2});
+    }
+  }
+
+  // School meals
+  if(school.length>0){
+    if(hasFSM==="yes"){
+      const fsmV=480*school.length; total+=fsmV;
+      ents.push({name:"Free School Meals",icon:"🍽️",ic:"ic-green",
+        desc:`Worth ~£480/yr per child. Your school administers once approved.`,
+        val:fmt(fsmV)+"/yr",vc:"",status:"check",badge:"Currently receiving",url:null,p:3});
+      const hafV=400*school.length; total+=hafV;
+      ents.push({name:"Holiday Activities & Food (HAF)",icon:"🏃",ic:"ic-teal",
+        desc:"Free holiday clubs at Easter, Summer and Christmas for FSM-eligible children. Up to 16 free days over summer.",
+        val:fmt(hafV)+"/yr",vc:"",status:"claim",badge:"Contact your council",
+        url:"https://www.gov.uk/government/publications/holiday-activities-and-food-programme",p:4});
+      ents.push({name:"School Uniform Grant",icon:"👕",ic:"ic-amber",
+        desc:"Local councils offer £50–£200 per child for uniform costs. FSM eligibility usually qualifies you.",
+        val:"Up to £200/child",vc:"am",status:"claim",badge:"Check your council",
+        url:"https://www.gov.uk/help-school-clothing-costs",p:5});
+    } else if(hasFSM==="notsure"){
+      flags.push({type:"tip",text:"Check Free School Meals eligibility at GOV.UK — if eligible it also unlocks free holiday activity clubs and uniform grants worth hundreds per year."});
+    }
+  }
+
+  // Healthy Start
+  const hasYoung=(childDOBs||[]).some(d=>{const a=getAge(d);return a&&a.years<4;});
+  if(hasYoung&&(onUC||onLegacy)&&myMid<25000){
+    const hs=8.5*52; total+=hs;
+    ents.push({name:"Healthy Start vouchers",icon:"🥕",ic:"ic-green",
+      desc:"£8.50/week from the NHS for milk, fruit and vegetables if you have a child under 4 and receive qualifying benefits.",
+      val:fmt(hs)+"/yr",vc:"",status:"claim",badge:"Apply via NHS",
+      url:"https://www.healthystart.nhs.uk/",p:3});
+  }
+
+  // Timeline
+  (childDOBs||[]).forEach((dob,i)=>{
+    const a=getAge(dob); if(!a) return;
+    const lbl=`Child ${i+1}`;
+    if(a.months<9) timeline.push({when:`In ${9-a.months} month${9-a.months!==1?"s":""}`,what:`${lbl} becomes eligible for free childcare hours (from the term after turning 9 months)`});
+    if(a.years>=3&&a.years<4){
+      const ms=(4-a.years)*12-(a.months%12);
+      if(ms>0&&ms<18) timeline.push({when:`In ~${Math.ceil(ms/6)*6} months`,what:`${lbl} starts school — free childcare ends, check Free School Meals eligibility`});
+    }
+    if(a.years>=14&&a.years<17) timeline.push({when:"When your child turns 16",what:"Child Benefit continues to 20 if they stay in full-time education — notify HMRC to keep payments going"});
+  });
+
+  // Actions
+  if(!actions.find(a=>a.title.includes("Child Benefit"))){
+    actions.push({num:2,title:"Claim Child Benefit",
+      detail:"Apply even if income means some is taxed back — it protects your National Insurance record.",
+      url:"https://www.gov.uk/child-benefit",dl:null});
+  }
+  if(preschool.length>0&&bothWorking&&!over100k){
+    actions.push({num:3,title:"Set up Tax-Free Childcare account",
+      detail:"Apply via Childcare Choices. Government adds 20% up to £500/quarter per child. Takes 20 minutes.",
+      url:"https://www.gov.uk/tax-free-childcare",dl:"Reconfirm every 3 months or payments pause"});
+  }
+  if(hasFSM==="yes"||hasFSM==="notsure"){
+    actions.push({num:4,title:"Book HAF holiday club places",
+      detail:"Contact your local council to find your HAF programme. Places are free but limited.",
+      url:"https://www.gov.uk/government/publications/holiday-activities-and-food-programme",dl:"Easter places typically open in January"});
+  }
+  actions.forEach((a,i)=>a.num=i+1);
+
+  return {total,ents:ents.sort((a,b)=>a.p-b.p),flags,actions,timeline};
+}
+
+function buildSteps(ans){
+  const n=parseInt(ans.numChildren)||0;
+  const isSingle=ans.householdType==="single";
+  const hasP=(ans.childDOBs||[]).some(isPreschool);
+  const hasS=(ans.childDOBs||[]).some(isSchoolAge);
+  const steps=[
+    {key:"numChildren",phase:"Your family",q:"How many children do you have?",
+     hint:"Include children up to age 20 if in full-time education.",type:"pills",
+     opts:[{v:"1",l:"1"},{v:"2",l:"2"},{v:"3",l:"3"},{v:"4",l:"4"},{v:"5+",l:"5+"}],
+     ok:a=>!!a.numChildren},
+  ];
+  if(n>0) steps.push({key:"childDOBs",phase:"Your family",
+    q:n===1?"When was your child born?":"When were your children born?",
+    hint:"Used to calculate age-based entitlements. Never stored.",type:"dobs",
+    ok:a=>(a.childDOBs||[]).filter(Boolean).length>=n});
+  steps.push({key:"householdType",phase:"Your family",q:"What is your household situation?",type:"opts",
+    opts:[{v:"couple",l:"Couple living together"},{v:"single",l:"Single parent"}],
+    ok:a=>!!a.householdType});
+  steps.push({key:"myIncome",phase:"Income",q:"What is your annual income before tax?",
+    hint:"Approximate bands are fine — we don't need exact figures.",type:"opts",
+    opts:[{v:"under20",l:"Under £20,000"},{v:"20to40",l:"£20,000 – £40,000"},{v:"40to60",l:"£40,000 – £60,000"},
+          {v:"60to80",l:"£60,000 – £80,000"},{v:"80to100",l:"£80,000 – £100,000"},{v:"over100",l:"Over £100,000"}],
+    ok:a=>!!a.myIncome});
+  if(!isSingle) steps.push({key:"partnerIncome",phase:"Income",q:"What is your partner's annual income before tax?",
+    hint:"Needed for joint Tax-Free Childcare and Child Benefit calculations.",type:"opts",
+    opts:[{v:"under20",l:"Under £20,000"},{v:"20to40",l:"£20,000 – £40,000"},{v:"40to60",l:"£40,000 – £60,000"},
+          {v:"60to80",l:"£60,000 – £80,000"},{v:"80to100",l:"£80,000 – £100,000"},{v:"over100",l:"Over £100,000"}],
+    ok:a=>!!a.partnerIncome});
+  steps.push({key:"workingStatus",phase:"Your situation",
+    q:isSingle?"Are you currently working?":"Are you and your partner currently working?",
+    hint:"Maternity, paternity and adoption leave counts as working for most entitlements.",type:"opts",
+    opts:isSingle?[{v:"both",l:"Yes, employed or self-employed"},{v:"parental",l:"On parental leave"},{v:"neither",l:"Not currently working"}]:
+                  [{v:"both",l:"Both working"},{v:"parental",l:"One working, one on parental leave"},
+                   {v:"one",l:"One working, one not working"},{v:"self",l:"One or both self-employed"},{v:"neither",l:"Neither working"}],
+    ok:a=>!!a.workingStatus});
+  steps.push({key:"currentBenefits",phase:"Your situation",q:"Are you currently receiving any of these?",
+    hint:"Select all that apply.",type:"multi",
+    opts:[{v:"uc",l:"Universal Credit",d:"The main working-age benefit"},
+          {v:"legacy",l:"Child Tax Credit / Working Tax Credit",d:"Legacy benefits being phased out"},
+          {v:"housing",l:"Housing Benefit or Council Tax Reduction",d:""},
+          {v:"none",l:"None of these",d:""}],
+    ok:a=>Array.isArray(a.currentBenefits)&&a.currentBenefits.length>0});
+  if(hasS) steps.push({key:"hasFSM",phase:"Your situation",q:"Do your school-age children receive Free School Meals?",
+    hint:"FSM unlocks holiday activity clubs and uniform grants worth hundreds per year.",type:"opts",
+    opts:[{v:"yes",l:"Yes, they receive free school meals"},{v:"no",l:"No"},{v:"notsure",l:"Not sure — check for me"}],
+    ok:a=>!!a.hasFSM});
+  if(hasP){
+    steps.push({key:"childcareHours",phase:"Childcare",q:"How many hours of paid childcare do you use each week?",
+      hint:"All paid hours — nursery, childminder, wraparound. Exclude free hours.",type:"pills",
+      opts:[{v:"10",l:"Under 15 hrs"},{v:"20",l:"15–25 hrs"},{v:"30",l:"25–40 hrs"},{v:"50",l:"Over 40 hrs"}],
+      ok:a=>!!a.childcareHours});
+    steps.push({key:"childcareRate",phase:"Childcare",q:"What do you pay per hour on average?",
+      hint:"London averages £13–15/hr, the North £6–8/hr. Used to calculate your actual £ savings.",type:"pills",
+      opts:[{v:"6",l:"Under £7/hr"},{v:"8",l:"£7–10/hr"},{v:"11",l:"£10–13/hr"},{v:"14",l:"£13+/hr"},{v:"8",l:"Not sure"}],
+      ok:a=>!!a.childcareRate});
+  }
+  steps.push({key:"postcode",phase:"Location",q:"What is the first part of your postcode?",
+    hint:"Optional — helps show local programme links. First part only e.g. SW1, M1. Never stored.",
+    type:"postcode",ok:()=>true});
+  return steps;
+}
+
+function Tick(){
+  return (
+    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+      <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function App(){
+  const [step,setStep]=useState(0);
+  const [ans,setAns]=useState({});
+  const [results,setResults]=useState(null);
+  const topRef=useRef(null);
+  const scrollTop=()=>topRef.current&&topRef.current.scrollIntoView({behavior:"smooth"});
+  const steps=buildSteps(ans);
+  const cur=steps[step];
+  const progress=results?100:(step/steps.length)*100;
+  const canGo=cur?cur.ok(ans):false;
+  function setA(k,v){setAns(p=>({...p,[k]:v}));}
+  function next(){scrollTop();if(step<steps.length-1)setStep(s=>s+1);else setResults(calculate(ans));}
+  function back(){scrollTop();setStep(s=>s-1);}
+  function restart(){setStep(0);setAns({});setResults(null);scrollTop();}
+  return (
+    <div ref={topRef}>
+      <style>{css}</style>
+      <div className="app">
+        {!results ? (
+          <>
+            <div className="hdr">
+              <p className="eyebrow">Free · No login · Under 3 minutes</p>
+              <h1>Find out what your family is entitled to</h1>
+              <p>Answer a few questions and we'll show every government entitlement available to your family — and exactly how to claim it. No data stored.</p>
+            </div>
+            <div className="prog-wrap">
+              <p className="prog-lbl">Step {step+1} of {steps.length}</p>
+              <div className="prog-bar"><div className="prog-fill" style={{width:`${progress}%`}}/></div>
+            </div>
+            {step>0&&<button className="back-btn" onClick={back}>← Back</button>}
+            {cur&&<QuestionStep step={cur} ans={ans} setA={setA} next={next} canGo={canGo} isLast={step===steps.length-1}/>}
+          </>
+        ) : (
+          <Results results={results} restart={restart}/>
+        )}
+      </div>
     </div>
-  </nav>
+  );
+}
 
-  <!-- Ad slot: leaderboard above tool (uncomment when AdSense approved) -->
-  <!--
-  <div class="ad-slot">
-    <p class="ad-label">Advertisement</p>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="XXXXXXXXXX"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-  -->
+function QuestionStep({step,ans,setA,next,canGo,isLast}){
+  const{key,phase,q,hint,type,opts}=step;
+  return (
+    <div>
+      <p className="phase">{phase}</p>
+      <h2 className="qtext">{q}</h2>
+      {hint&&<p className="qhint">{hint}</p>}
 
-  <div id="root"></div>
+      {type==="opts"&&(
+        <div className="opts">
+          {opts.map(o=>(
+            <button key={o.v} className={`opt-btn${ans[key]===o.v?" sel":""}`} onClick={()=>setA(key,o.v)}>
+              <span className="chk">{ans[key]===o.v&&<Tick/>}</span>
+              <span>{o.l}</span>
+            </button>
+          ))}
+        </div>
+      )}
 
-  <!-- Ad slot: after results (uncomment when AdSense approved) -->
-  <!--
-  <div class="ad-slot" style="padding-bottom: 32px;">
-    <p class="ad-label">Advertisement</p>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="XXXXXXXXXX"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-  -->
+      {type==="pills"&&(
+        <div className="pills">
+          {opts.map(o=>(
+            <button key={o.v} className={`pill-btn${ans[key]===o.v?" sel":""}`} onClick={()=>setA(key,o.v)}>{o.l}</button>
+          ))}
+        </div>
+      )}
 
-  <!-- Load the React component -->
-  <script type="text/babel" src="family-entitlements-tool.jsx"></script>
-  <script type="text/babel">
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(App));
-  </script>
+      {type==="multi"&&(
+        <div className="opts">
+          {opts.map(o=>{
+            const vals=ans[key]||[];
+            const sel=vals.includes(o.v);
+            return (
+              <button key={o.v} className={`opt-btn${sel?" sel":""}`} onClick={()=>setA(key,sel?vals.filter(x=>x!==o.v):[...vals,o.v])}>
+                <span className="chk">{sel&&<Tick/>}</span>
+                <span>{o.l}{o.d&&<span className="opt-desc">{o.d}</span>}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
+      {type==="dobs"&&(
+        <div style={{marginBottom:8}}>
+          {Array.from({length:parseInt(ans.numChildren)||1}).map((_,i)=>(
+            <div key={i} className="dob-row">
+              <span className="dob-lbl">Child {i+1}</span>
+              <input type="date" className="inp" style={{flex:1,marginBottom:0}}
+                value={(ans.childDOBs||[])[i]||""}
+                max={new Date().toISOString().split("T")[0]}
+                min={new Date(Date.now()-20*365*24*60*60*1000).toISOString().split("T")[0]}
+                onChange={e=>{const u=[...(ans.childDOBs||[])];u[i]=e.target.value;setA("childDOBs",u);}}/>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {type==="postcode"&&(
+        <input className="inp" type="text" placeholder="e.g. SW1, M1, LS1"
+          style={{width:200,textTransform:"uppercase"}} maxLength={4}
+          value={ans.postcode||""} onChange={e=>setA("postcode",e.target.value.toUpperCase())}/>
+      )}
+
+      <button className="next-btn" onClick={next} disabled={!canGo}>
+        {isLast?"See my results →":"Continue →"}
+      </button>
+    </div>
+  );
+}
+
+function Results({results,restart}){
+  const{total,ents,flags,actions,timeline}=results;
+  return (
+    <div>
+      <div className="res-hdr">
+        <p className="phase">Your personalised results</p>
+        <h2>Here's what your family could be entitled to</h2>
+        <div className="total">{fmt(total)}</div>
+        <p className="total-lbl">estimated total yearly value</p>
+      </div>
+
+      {flags.length>0&&<>
+        <p className="sec-title">Important for your situation</p>
+        {flags.map((f,i)=>(
+          <div key={i} className="alert">
+            {f.type==="critical"&&<strong>Action needed: </strong>}
+            {f.type==="tip"&&<strong>Money-saving tip: </strong>}
+            {f.type==="warning"&&<strong>Note: </strong>}
+            {f.text}
+          </div>
+        ))}
+      </>}
+
+      <p className="sec-title">Your entitlements</p>
+      {ents.map((e,i)=>(
+        <div key={i} className={`ent-card${e.hi?" hi":""}`}>
+          <div className={`ent-icon ${e.ic}`}>{e.icon}</div>
+          <div className="ent-body">
+            <p className="ent-name">{e.name}
+              <span className={`badge ${e.status==="check"?"b-check":e.status==="no"?"b-no":"b-claim"}`}>{e.badge}</span>
+            </p>
+            <p className="ent-desc">{e.desc}</p>
+            <p className={`ent-val${e.vc?" "+e.vc:""}`}>{e.val}</p>
+            {e.url&&<a className="act-link" href={e.url} target="_blank" rel="noopener noreferrer">Apply on GOV.UK →</a>}
+          </div>
+        </div>
+      ))}
+
+      {actions.length>0&&<>
+        <p className="sec-title">Your action plan — do these in order</p>
+        {actions.map((a,i)=>(
+          <div key={i} className="act-card">
+            <div className="act-num">{a.num}</div>
+            <div className="act-body">
+              <p className="act-title">{a.title}</p>
+              <p className="act-detail">{a.detail}</p>
+              {a.dl&&<span className="act-dl">⏱ {a.dl}</span>}
+              {a.url&&<a className="act-link" href={a.url} target="_blank" rel="noopener noreferrer" style={{display:"block"}}>Go to GOV.UK →</a>}
+            </div>
+          </div>
+        ))}
+      </>}
+
+      {timeline.length>0&&<>
+        <p className="sec-title">Coming up for your family</p>
+        {timeline.map((t,i)=>(
+          <div key={i} className="tl-item">
+            <div className="tl-dot"/>
+            <div>
+              <p className="tl-when">{t.when}</p>
+              <p className="tl-what">{t.what}</p>
+            </div>
+          </div>
+        ))}
+      </>}
+
+      <button className="restart" onClick={restart}>← Start again</button>
+      <p className="disc">Results are estimates based on published UK government policy (2025/26). Not financial or legal advice. Always verify eligibility directly with GOV.UK before applying. No data you enter is stored or transmitted.</p>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
 </body>
 </html>
