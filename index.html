@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find out every government entitlement your family is entitled to — free childcare hours, Child Benefit, free school meals, holiday clubs and more. Takes under 3 minutes.">
+  <meta name="keywords" content="UK family entitlements, free childcare hours, Child Benefit calculator, free school meals, Tax-Free Childcare, HAF programme, family benefits UK">
+  <meta property="og:title" content="FamilyEntitled — Find What Your Family Is Owed">
+  <meta property="og:description" content="UK families miss out on thousands each year. Find every entitlement in under 3 minutes.">
+  <meta property="og:type" content="website">
+  <title>FamilyEntitled — Find What Your Family Is Owed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #0d6b5e;
+      --teal-mid: #1d9e87;
+      --teal-light: #e8f5f2;
+      --teal-pale: #f2faf8;
+      --warm: #fafaf7;
+      --warm-mid: #f4f3ee;
+      --text: #141412;
+      --text-secondary: #4a4a46;
+      --text-tertiary: #8a8a82;
+      --border: #e2e0d8;
+      --white: #ffffff;
+      --amber: #b45309;
+      --amber-light: #fef3c7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,250,247,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--teal);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--text);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal);
+      color: white;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-cta:hover { background: #0a5a4f; }
+    .nav-cta .nav-cta-long { display: inline; }
+    .nav-cta .nav-cta-short { display: none; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px 72px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--teal-mid);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--teal);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: #0a5a4f;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary .arrow {
+      font-size: 18px;
+      transition: transform 0.15s ease;
+    }
+
+    .btn-primary:hover .arrow { transform: translateX(3px); }
+
+    .hero-reassurance {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-reassurance::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    /* ── HERO CARD ── */
+    .hero-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-mid));
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .card-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .card-stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      margin-bottom: 28px;
+    }
+
+    .mini-entitlements {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mini-ent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--warm);
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .mini-ent-name { color: var(--text-secondary); font-weight: 400; }
+    .mini-ent-val { color: var(--teal); font-weight: 500; }
+
+    .card-cta-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      text-align: center;
+    }
+
+    /* ── TRUST STRIP ── */
+    .trust-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      padding: 20px 24px;
+    }
+
+    .trust-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .trust-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--teal);
+      flex-shrink: 0;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 48px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .step {
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -0.04em;
+    }
+
+    .step h3 {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── ENTITLEMENTS COVERED ── */
+    .covered-section {
+      background: var(--warm-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .covered-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .covered-item {
+      background: var(--white);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .covered-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .covered-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .covered-desc {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    .covered-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    /* ── WHO IS IT FOR ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .audience-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .audience-card h3 {
+      font-size: 17px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .audience-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .audience-highlight {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      background: var(--teal-light);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    /* ── FAQ ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    details {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    details:last-child { border-bottom: none; }
+
+    summary {
+      padding: 20px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      user-select: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 24px 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── CTA BLOCK ── */
+    .cta-block {
+      background: var(--teal);
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta-block h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-block p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 300;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      color: var(--teal);
+      padding: 16px 32px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-white:hover {
+      background: var(--teal-light);
+      transform: translateY(-1px);
+    }
+
+    .cta-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.5);
+      padding: 48px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-logo span { font-style: italic; font-weight: 400; color: rgba(255,255,255,0.6); }
+
+    .footer-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 300px;
+      margin-top: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-links a:hover { color: white; }
+
+    .footer-bottom {
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate {
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 48px 24px 56px;
+        gap: 40px;
+      }
+      .hero-card { max-width: 100%; }
+      .steps-grid { grid-template-columns: 1fr; gap: 24px; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .covered-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      /* Nav */
+      .nav-inner { height: 52px; }
+      .logo { font-size: 17px; }
+      .nav-cta { padding: 8px 14px; font-size: 13px; }
+      .nav-cta .nav-cta-long { display: none; }
+      .nav-cta .nav-cta-short { display: inline; }
+
+      /* Hero */
+      .hero { padding: 36px 20px 44px; gap: 32px; }
+      .hero-sub { font-size: 16px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary { justify-content: center; padding: 16px 24px; }
+      .hero-reassurance { justify-content: center; }
+      .hero-card { padding: 24px 20px; }
+      .card-stat { font-size: 44px; }
+
+      /* Trust strip */
+      .trust-inner { gap: 14px; flex-direction: column; align-items: flex-start; padding: 4px 0; }
+      .trust-item { font-size: 13px; }
+
+      /* Sections */
+      .section { padding: 56px 20px; }
+      .covered-grid { grid-template-columns: 1fr; }
+      .covered-item { padding: 18px; }
+
+      /* Audience cards */
+      .audience-card { padding: 20px; }
+
+      /* FAQ */
+      summary { padding: 16px 18px; font-size: 14px; }
+      .faq-answer { padding: 0 18px 16px; }
+
+      /* CTA block */
+      .cta-block { padding: 56px 20px; }
+      .btn-white { width: 100%; justify-content: center; }
+
+      /* Footer */
+      .footer-top { flex-direction: column; gap: 24px; }
+      .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+      /* Mini entitlements */
+      .mini-ent { flex-direction: row; flex-wrap: nowrap; }
+      .mini-ent-name { font-size: 12px; }
+      .mini-ent-val { font-size: 12px; white-space: nowrap; }
+    }
+
+    @media (max-width: 380px) {
+      .logo { font-size: 15px; }
+      .nav-cta { padding: 7px 11px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">Family<span>Entitled</span></a>
+      <a href="tool.html" class="nav-cta">
+        <span class="nav-cta-long">Check your entitlements</span>
+        <span class="nav-cta-short">Check →</span>
+        <svg class="nav-cta-long" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding: 0 0;">
+    <div class="hero">
+      <div>
+        <p class="hero-eyebrow animate">Free · No login · Under 3 minutes</p>
+        <h1 class="animate delay-1">
+          UK families miss out on<br>
+          <em>£4,700 a year</em><br>
+          on average.
+        </h1>
+        <p class="hero-sub animate delay-2">
+          Free childcare hours, Tax-Free Childcare, Child Benefit, free school meals, holiday clubs, uniform grants — all in one place. We tell you exactly what you're owed and how to claim it.
+        </p>
+        <div class="hero-actions animate delay-3">
+          <a href="tool.html" class="btn-primary">
+            Find what I'm entitled to
+            <span class="arrow">→</span>
+          </a>
+          <span class="hero-reassurance">No data stored. Ever.</span>
+        </div>
+      </div>
+
+      <div class="hero-card animate delay-2">
+        <p class="card-label">Example family · 2 children · both working</p>
+        <p class="card-stat">£8,340</p>
+        <p class="card-stat-label">estimated yearly entitlements</p>
+        <div class="mini-entitlements">
+          <div class="mini-ent">
+            <span class="mini-ent-name">30 hours free childcare</span>
+            <span class="mini-ent-val">£5,460/yr</span>
+          </div>
+          <div class="mini-ent">
+            <span class="mini-ent-name">Tax-Free Childcare top-up</span>
+            <span class="mini-ent-val">£1,800/yr</span>
+          </div>
+          <div class="mini-ent">
+            <span class="mini-ent-name">Child Benefit</span>
+            <span class="mini-ent-val">£1,430/yr</span>
+          </div>
+          <div class="mini-ent" style="background: #e8f5f2;">
+            <span class="mini-ent-name" style="color: #0d6b5e;">+ 3 more entitlements</span>
+            <span class="mini-ent-val">check yours →</span>
+          </div>
+        </div>
+        <p class="card-cta-note">
+          <a href="tool.html" style="color: var(--teal); text-decoration: none; font-weight: 500;">Calculate your family's figure →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 18 18" fill="none"><path d="M9 1l2.09 4.26L16 6.27l-3.5 3.41.83 4.82L9 12.27l-4.33 2.27.83-4.82L2 6.27l4.91-.71L9 1z" fill="currentColor"/></svg>
+        Based on current GOV.UK policy
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 18 18" fill="none"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-1 11.5L4.5 9l1.41-1.41L8 9.67l4.59-4.58L14 6.5l-6 6z" fill="currentColor"/></svg>
+        Covers all ages 0–20
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 18 18" fill="none"><path d="M9 1a8 8 0 100 16A8 8 0 009 1zm1 12H8V8h2v5zm0-7H8V4h2v2z" fill="currentColor"/></svg>
+        No data stored or transmitted
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 18 18" fill="none"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zM7 13l-3-3 1.41-1.41L7 10.17l5.59-5.58L14 6l-7 7z" fill="currentColor"/></svg>
+        Completely free · No login
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <p class="section-eyebrow">How it works</p>
+    <h2>Three steps. Under three minutes.</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Answer a few questions</h3>
+        <p>We ask about your children's ages, your income, your working situation and what you already claim. No names, no exact figures — just enough to calculate your entitlements accurately.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>We run the calculations</h3>
+        <p>Our tool checks every UK government entitlement against your answers — including the ones most families don't know about, like the pension contribution trick that restores thousands in childcare support.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Get your personalised plan</h3>
+        <p>You get a full breakdown of what you're entitled to, what it's worth in pounds, and a numbered action plan telling you exactly what to apply for first — with direct links to GOV.UK.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENTITLEMENTS COVERED -->
+  <section class="covered-section">
+    <div class="section">
+      <p class="section-eyebrow">What we cover</p>
+      <h2>Every family entitlement in one place</h2>
+      <div class="covered-grid">
+        <div class="covered-item">
+          <span class="covered-icon">🏫</span>
+          <p class="covered-name">Free childcare hours</p>
+          <p class="covered-desc">15–30 hours/week for eligible children aged 9 months to school age. The biggest single entitlement for young families.</p>
+          <p class="covered-value">Up to £7,500/yr per child</p>
+        </div>
+        <div class="covered-item">
+          <span class="covered-icon">💰</span>
+          <p class="covered-name">Tax-Free Childcare</p>
+          <p class="covered-desc">Government adds 20p for every 80p you pay for childcare. Works alongside free hours, not instead of them.</p>
+          <p class="covered-value">Up to £2,000/yr per child</p>
+        </div>
+        <div class="covered-item">
+          <span class="covered-icon">👶</span>
+          <p class="covered-name">Child Benefit</p>
+          <p class="covered-desc">£27.50/week for your first child, £17.90 for each additional child. Plus crucial National Insurance credits for your pension.</p>
+          <p class="covered-value">£1,430/yr first child</p>
+        </div>
+        <div class="covered-item">
+          <span class="covered-icon">🍽️</span>
+          <p class="covered-name">Free school meals</p>
+          <p class="covered-desc">Worth around £480/year per child for qualifying families — and the gateway to holiday clubs and uniform grants.</p>
+          <p class="covered-value">~£480/yr per child</p>
+        </div>
+        <div class="covered-item">
+          <span class="covered-icon">🏃</span>
+          <p class="covered-name">HAF holiday clubs</p>
+          <p class="covered-desc">Free holiday activity clubs at Easter, Summer and Christmas for FSM-eligible children. Up to 16 days of free provision over summer alone.</p>
+          <p class="covered-value">Up to £400/yr per child</p>
+        </div>
+        <div class="covered-item">
+          <span class="covered-icon">👕</span>
+          <p class="covered-name">Uniform grants</p>
+          <p class="covered-desc">Local councils offer £50–£200 per child for school uniform costs. Most parents have never heard of this.</p>
+          <p class="covered-value">Up to £200/yr per child</p>
+        </div>
+        <div class="covered-item">
+          <span class="covered-icon">🥕</span>
+          <p class="covered-name">Healthy Start vouchers</p>
+          <p class="covered-desc">£8.50/week from the NHS towards food and milk for families with young children on qualifying benefits. Massively underclaimed.</p>
+          <p class="covered-value">£442/yr</p>
+        </div>
+        <div class="covered-item">
+          <span class="covered-icon">💡</span>
+          <p class="covered-name">Pension optimisation</p>
+          <p class="covered-desc">If either parent earns close to £100,000, a pension contribution could restore thousands in childcare entitlements. We flag this.</p>
+          <p class="covered-value">Up to £7,500/yr restored</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IS IT FOR -->
+  <section class="section">
+    <p class="section-eyebrow">Who it's for</p>
+    <h2>Designed for every UK family</h2>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h3>Working parents with young children</h3>
+        <p>The childcare system changed dramatically in 2024–25. Between free hours, Tax-Free Childcare, and UC childcare support, most families are missing at least one scheme — and many don't know these can stack together.</p>
+        <span class="audience-highlight">Average finding: £5,200/yr</span>
+      </div>
+      <div class="audience-card">
+        <h3>Parents with school-age children</h3>
+        <p>Free School Meals unlock the HAF programme and uniform grants that very few families know about. If you're not sure whether you qualify, we check for you — the eligibility rules are more generous than most people think.</p>
+        <span class="audience-highlight">Average finding: £900/yr</span>
+      </div>
+      <div class="audience-card">
+        <h3>Higher earners near the thresholds</h3>
+        <p>If either parent earns between £60,000 and £100,000, there are decisions to make about Child Benefit and childcare entitlements that could be worth thousands. Most accountants don't flag the pension contribution trick.</p>
+        <span class="audience-highlight">Often £3,000+ in savings</span>
+      </div>
+      <div class="audience-card">
+        <h3>Single parents</h3>
+        <p>Single parents face different rules across almost every scheme. We handle the calculations correctly — including the income thresholds that work differently when there's only one earner.</p>
+        <span class="audience-highlight">Tailored to your situation</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background: var(--warm-mid); border-top: 1px solid var(--border);">
+    <div class="section">
+      <p class="section-eyebrow">Questions</p>
+      <h2>Things people ask</h2>
+      <div class="faq-list">
+        <details>
+          <summary>Do you store any of my information?</summary>
+          <p class="faq-answer">No. All calculations happen in your browser. Nothing you enter is ever sent to our servers, stored in a database, or shared with anyone. When you close the tab, it's gone. You can verify this yourself — the tool has no login, no account creation, and no email required.</p>
+        </details>
+        <details>
+          <summary>How accurate are the results?</summary>
+          <p class="faq-answer">We calculate based on current published government rates and eligibility rules for England (2026/27 tax year). Results are estimates — your exact entitlement depends on circumstances that may be specific to your situation. We always link directly to GOV.UK for the final application so you can verify eligibility before you apply.</p>
+        </details>
+        <details>
+          <summary>I earn a decent salary — is this really relevant to me?</summary>
+          <p class="faq-answer">Very likely yes. Tax-Free Childcare is available to households where both parents earn under £100,000 each — that's a wide net. Child Benefit is available to all families (the clawback only kicks in above £60,000 and is often worth managing with pension contributions). The 30 hours free childcare is similarly broad. Many families on combined incomes of £120,000+ still have thousands of unclaimed entitlements.</p>
+        </details>
+        <details>
+          <summary>My youngest is about to start school — should I still use this?</summary>
+          <p class="faq-answer">Yes. School age doesn't mean entitlements end — it means they change. Free School Meals, the HAF holiday programme, uniform grants, and continued Child Benefit all kick in or continue at school age. We cover the full journey from 9 months to 20 years.</p>
+        </details>
+        <details>
+          <summary>What's the pension contribution tip about?</summary>
+          <p class="faq-answer">If either parent has an adjusted net income above £100,000, you lose eligibility for Tax-Free Childcare and the extended free childcare hours — potentially worth £7,500+ per year. But pension contributions reduce your adjusted net income. A contribution of just over the excess above £100,000 can restore full eligibility. We flag this automatically if it applies to you.</p>
+        </details>
+        <details>
+          <summary>Is this a government website?</summary>
+          <p class="faq-answer">No. FamilyEntitled is an independent tool. We're not affiliated with or endorsed by the UK government. We use publicly available government policy to calculate your entitlements and always send you to official GOV.UK pages to apply. All results should be treated as estimates — always verify with the relevant government department before acting.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES -->
+  <section style="background: var(--warm-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section">
+      <p class="section-eyebrow">Guides & articles</p>
+      <h2>Everything you need to know</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+
+        <a href="30-hours-free-childcare.html" style="text-decoration: none;">
+          <div style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; transition: border-color 0.15s ease; cursor: pointer;">
+            <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px;">Childcare</p>
+            <p style="font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3;">30 Hours Free Childcare: What It Actually Means for Your Family in 2025</p>
+            <p style="font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.5;">Who qualifies, how to apply, the deadlines you cannot miss, and what "free" actually costs.</p>
+          </div>
+        </a>
+
+        <a href="tax-free-childcare-vs-universal-credit.html" style="text-decoration: none;">
+          <div style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; transition: border-color 0.15s ease; cursor: pointer;">
+            <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px;">Childcare</p>
+            <p style="font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3;">Tax-Free Childcare vs Universal Credit Childcare: Which Is Worth More?</p>
+            <p style="font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.5;">These two schemes are mutually exclusive. Get the decision wrong and it could cost thousands.</p>
+          </div>
+        </a>
+
+        <a href="pension-contribution-childcare-trick.html" style="text-decoration: none;">
+          <div style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; transition: border-color 0.15s ease; cursor: pointer;">
+            <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px;">Tax & Childcare</p>
+            <p style="font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3;">The Pension Contribution Trick That Restores Your Childcare Entitlements</p>
+            <p style="font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.5;">Earning near £100,000? A pension contribution could restore up to £7,500+ a year in childcare support.</p>
+          </div>
+        </a>
+
+        <a href="free-school-meals-2026.html" style="text-decoration: none;">
+          <div style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; transition: border-color 0.15s ease; cursor: pointer;">
+            <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px;">School Age</p>
+            <p style="font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3;">Free School Meals 2026: Who Qualifies and What Else It Unlocks</p>
+            <p style="font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.5;">FSM eligibility is changing in September 2026 — and it unlocks holiday clubs, uniform grants and more.</p>
+          </div>
+        </a>
+
+        <a href="child-benefit-hicbc-2026.html" style="text-decoration: none;">
+          <div style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; transition: border-color 0.15s ease; cursor: pointer;">
+            <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px;">Benefits</p>
+            <p style="font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3;">Child Benefit 2026: The HICBC Taper Explained Simply</p>
+            <p style="font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.5;">New rates from April 2026, how the income taper works, and why you should claim even if you pay it all back.</p>
+          </div>
+        </a>
+
+        <a href="haf-holiday-clubs-guide.html" style="text-decoration: none;">
+          <div style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; transition: border-color 0.15s ease; cursor: pointer;">
+            <p style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px;">School Age</p>
+            <p style="font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3;">The HAF Programme: Free Holiday Clubs for Eligible Families</p>
+            <p style="font-size: 13px; color: var(--text-secondary); font-weight: 300; line-height: 1.5;">Up to 16 free days over summer for eligible children — and most qualifying families don't know it exists.</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+    <!-- CTA -->
+  <section class="cta-block">
+    <div class="cta-inner">
+      <h2>Find out what your family is owed.</h2>
+      <p>Takes under 3 minutes. No login. No data stored. Just a clear picture of every entitlement available to your family — and exactly how to claim them.</p>
+      <a href="tool.html" class="btn-white">
+        Start the check
+        <span>→</span>
+      </a>
+      <p class="cta-note">Free to use · Updated for 2026/27</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <a href="/" class="footer-logo">Family<span>Entitled</span></a>
+          <p class="footer-desc">An independent tool helping UK families find and claim every government entitlement they're owed. Free to use, no data stored.</p>
+        </div>
+        <div class="footer-links">
+          <a href="tool.html">Check entitlements</a>
+          <a href="about.html">About</a>
+          <a href="30-hours-free-childcare.html">30 hours free childcare</a>
+          <a href="child-benefit-hicbc-2026.html">Child Benefit 2026</a>
+          <a href="free-school-meals-2026.html">Free School Meals</a>
+          <a href="privacy.html">Privacy policy</a>
+          <a href="terms.html">Terms of use</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Results are estimates based on publicly available UK government policy (2026/27 tax year). FamilyEntitled is not affiliated with or endorsed by HM Government. Always verify your eligibility directly with GOV.UK before applying. This tool does not constitute financial or legal advice.</p>
+        <p style="margin-top: 10px; color: rgba(255,255,255,0.3);">© 2026 FamilyEntitled · <a href="privacy.html" style="color: rgba(255,255,255,0.3); text-decoration: none;">Privacy</a> · <a href="terms.html" style="color: rgba(255,255,255,0.3); text-decoration: none;">Terms</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie consent banner -->
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1a1a18;color:#e5e3db;padding:16px 24px;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid #333;">
+    <p style="font-size:13px;line-height:1.5;flex:1;min-width:260px;font-family:'DM Sans',sans-serif;">
+      We use cookies to understand how people use this site (Google Analytics). No personal data from the entitlements tool is ever tracked.
+      <a href="privacy.html" style="color:#1d9e87;text-decoration:none;margin-left:4px;">Privacy policy →</a>
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="feDeclineCookies()" style="padding:9px 18px;background:transparent;border:1px solid #555;color:#9ca3af;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;white-space:nowrap;">Decline</button>
+      <button onclick="feAcceptCookies()" style="padding:9px 18px;background:#0d6b5e;border:none;color:white;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;white-space:nowrap;">Accept cookies</button>
+    </div>
+  </div>
+  <script src="cookie-consent.js"></script>
+</body>
+</html>
