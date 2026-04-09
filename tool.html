@@ -186,7 +186,7 @@ function calculate(ans){
         url:"https://www.gov.uk/tax-free-childcare",p:2});
     }
     if(onUC&&bothWorking){
-      const ucVal=Math.min(hrs*rate*52*0.85,1014.63*12);
+      const ucCap=(preschool.length>=2?1836.16:1071.09)*12;const ucVal=Math.min(hrs*rate*52*0.85,ucCap);
       total+=ucVal;
       ents.push({name:"Universal Credit childcare",icon:"💰",ic:"ic-green",
         desc:"Claim back 85% of registered childcare costs through UC. Cannot combine with Tax-Free Childcare — usually worth more for UC claimants.",
@@ -218,10 +218,10 @@ function calculate(ans){
 
   // Healthy Start
   const hasYoung=(childDOBs||[]).some(d=>{const a=getAge(d);return a&&a.years<4;});
-  if(hasYoung&&(onUC||onLegacy)&&myMid<25000){
+  if(hasYoung&&(onUC||onLegacy)&&myMid<9800){
     const hs=8.5*52; total+=hs;
     ents.push({name:"Healthy Start vouchers",icon:"🥕",ic:"ic-green",
-      desc:"£8.50/week from the NHS for milk, fruit and vegetables if you have a child under 4 and receive qualifying benefits.",
+      desc:"£9.30/week for babies under 1, £4.65/week for children aged 1–4 and pregnant women, from the NHS for milk, fruit and vegetables.",
       val:fmt(hs)+"/yr",vc:"",status:"claim",badge:"Apply via NHS",
       url:"https://www.healthystart.nhs.uk/",p:3});
   }
