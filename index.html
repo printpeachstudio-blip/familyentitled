@@ -707,18 +707,32 @@
       .logo { font-size: 15px; }
       .nav-cta { padding: 7px 11px; font-size: 12px; }
     }
+      .nav-links{display:flex;align-items:center;gap:24px;}
+    .nav-links a{font-size:13px;color:var(--text-secondary);text-decoration:none;}
+    .nav-links a:hover{color:var(--teal);}
+    .nav-cta .nav-cta-long{display:inline;}
+    .nav-cta .nav-cta-short{display:none;}
+    @media(max-width:600px){
+      .nav-links{display:none;}
+      .nav-cta .nav-cta-long{display:none;}
+      .nav-cta .nav-cta-short{display:inline;}
+    }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav>
+    <nav>
     <div class="nav-inner">
-      <a href="/" class="logo">Family<span>Entitled</span></a>
-      <a href="blog/index.html" style="font-size:13px;color:#4a4a46;text-decoration:none;margin-right:16px;">Blog</a><a href="tool.html" class="nav-cta">
+      <a href="index.html" class="logo">Family<span>Entitled</span></a>
+      <div class="nav-links">
+        <a href="blog/index.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="tool.html" class="nav-cta">
         <span class="nav-cta-long">Check your entitlements</span>
         <span class="nav-cta-short">Check →</span>
-        <svg class="nav-cta-long" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
   </nav>
@@ -1021,11 +1035,13 @@
         </div>
         <div class="footer-links">
           <a href="tool.html">Check entitlements</a>
+          <a href="blog/index.html">Blog</a>
           <a href="about.html">About</a>
-          <a href="blog/30-hours-free-childcare.html">30 hours free childcare</a>
-          <a href="blog/child-benefit-hicbc-2026.html">Child Benefit 2026</a>
-          <a href="blog/free-school-meals-2026.html">Free School Meals</a>
           <a href="contact.html">Contact</a>
+          <a href="blog/child-benefit-hicbc-2026.html">Child Benefit 2026</a>
+          <a href="blog/30-hours-free-childcare.html">30 hours free childcare</a>
+          <a href="blog/free-school-meals-2026.html">Free School Meals</a>
+          <a href="blog/two-child-cap-abolished-2026.html">Two-child cap abolished</a>
           <a href="privacy.html">Privacy policy</a>
           <a href="terms.html">Terms of use</a>
         </div>

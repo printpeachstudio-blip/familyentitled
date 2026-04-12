@@ -70,16 +70,34 @@
       .page { padding: 40px 20px 72px; }
       .contact-box { padding: 22px; }
     }
+      .nav-links{display:flex;align-items:center;gap:24px;}
+    .nav-links a{font-size:13px;color:var(--text-secondary);text-decoration:none;}
+    .nav-links a:hover{color:var(--teal);}
+    .nav-cta .nav-cta-long{display:inline;}
+    .nav-cta .nav-cta-short{display:none;}
+    @media(max-width:600px){
+      .nav-links{display:none;}
+      .nav-cta .nav-cta-long{display:none;}
+      .nav-cta .nav-cta-short{display:inline;}
+    }
   </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="logo">Family<span>Entitled</span></a>
-    <a href="blog/index.html" style="font-size:13px;color:#4a4a46;text-decoration:none;margin-right:16px;">Blog</a><a href="tool.html" class="nav-cta">Check your entitlements →</a>
-  </div>
-</nav>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Family<span>Entitled</span></a>
+      <div class="nav-links">
+        <a href="blog/index.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="tool.html" class="nav-cta">
+        <span class="nav-cta-long">Check your entitlements</span>
+        <span class="nav-cta-short">Check →</span>
+      </a>
+    </div>
+  </nav>
 
 <div class="page">
 
@@ -158,7 +176,37 @@
 </div>
 
 <footer>
-  <a href="index.html">FamilyEntitled</a> · <a href="tool.html">Check entitlements</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+  <div style="max-width:1100px;margin:0 auto;padding:0 24px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px;padding:32px 0 24px;border-bottom:1px solid rgba(255,255,255,0.1);">
+      <div>
+        <a href="index.html" style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;text-decoration:none;">Family<span style="font-style:italic;font-weight:400;color:rgba(255,255,255,0.7);">Entitled</span></a>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px;max-width:280px;line-height:1.5;">An independent tool helping UK families find every entitlement they're owed. Free, no data stored.</p>
+      </div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Site</p>
+          <a href="index.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Home</a>
+          <a href="tool.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Check entitlements</a>
+          <a href="blog/index.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Blog</a>
+          <a href="about.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">About</a>
+          <a href="contact.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Contact</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Guides</p>
+          <a href="blog/child-benefit-hicbc-2026.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Child Benefit 2026</a>
+          <a href="blog/30-hours-free-childcare.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">30 Hours Free Childcare</a>
+          <a href="blog/free-school-meals-2026.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Free School Meals</a>
+          <a href="blog/two-child-cap-abolished-2026.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Two-Child Cap Abolished</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Legal</p>
+          <a href="privacy.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Privacy policy</a>
+          <a href="terms.html" style="font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;">Terms of use</a>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.3);padding:20px 0;line-height:1.6;">Results are estimates based on publicly available UK government policy (2026/27 tax year). FamilyEntitled is not affiliated with or endorsed by HM Government. Always verify eligibility directly with GOV.UK before applying. This tool does not constitute financial or legal advice. © 2026 FamilyEntitled</p>
+  </div>
 </footer>
 
 <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1a1a18;color:#e5e3db;padding:16px 24px;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid #333;">
