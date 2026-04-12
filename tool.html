@@ -278,12 +278,12 @@ function buildSteps(ans){
   steps.push({key:"householdType",phase:"Your family",q:"What is your household situation?",type:"opts",
     opts:[{v:"couple",l:"Couple living together"},{v:"single",l:"Single parent"}],
     ok:a=>!!a.householdType});
-  steps.push({key:"myIncome",phase:"Income",q:"What is your annual income before tax?",
+  steps.push({key:"myIncome",phase:"Income",q:"What is your annual income before tax? (Your salary — we'll ask about your partner's next if applicable)",
     hint:"Approximate bands are fine — we don't need exact figures.",type:"opts",
     opts:[{v:"under20",l:"Under £20,000"},{v:"20to40",l:"£20,000 – £40,000"},{v:"40to60",l:"£40,000 – £60,000"},
           {v:"60to80",l:"£60,000 – £80,000"},{v:"80to100",l:"£80,000 – £100,000"},{v:"over100",l:"Over £100,000"}],
     ok:a=>!!a.myIncome});
-  if(!isSingle) steps.push({key:"partnerIncome",phase:"Income",q:"What is your partner's annual income before tax?",
+  if(!isSingle) steps.push({key:"partnerIncome",phase:"Income",q:"What is your partner's annual income before tax? (Their salary — enter 0 or under £20k if they don't work)",
     hint:"Needed for joint Tax-Free Childcare and Child Benefit calculations.",type:"opts",
     opts:[{v:"under20",l:"Under £20,000"},{v:"20to40",l:"£20,000 – £40,000"},{v:"40to60",l:"£40,000 – £60,000"},
           {v:"60to80",l:"£60,000 – £80,000"},{v:"80to100",l:"£80,000 – £100,000"},{v:"over100",l:"Over £100,000"}],
@@ -304,7 +304,7 @@ function buildSteps(ans){
     ok:a=>Array.isArray(a.currentBenefits)&&a.currentBenefits.length>0});
   if(hasS) steps.push({key:"hasFSM",phase:"Your situation",q:"Do your school-age children receive Free School Meals?",
     hint:"FSM unlocks holiday activity clubs and uniform grants worth hundreds per year.",type:"opts",
-    opts:[{v:"yes",l:"Yes, they receive free school meals"},{v:"no",l:"No"},{v:"notsure",l:"Not sure — check for me"}],
+    opts:[{v:"yes",l:"Yes, they receive free school meals"},{v:"no",l:"No"},{v:"notsure",l:"Not sure — check for me"},{v:"na",l:"Not applicable — my children are not yet at school"}],
     ok:a=>!!a.hasFSM});
   if(hasP){
     steps.push({key:"childcareHours",phase:"Childcare",q:"How many hours of paid childcare do you use each week?",
