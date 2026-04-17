@@ -1,14 +1,8 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "familyentitled.co.uk"
-        }
-      ],
-      "destination": "https://www.familyentitled.co.uk/$1",
+      "source": "/:path*",
+      "destination": "https://www.familyentitled.co.uk/:path*",
       "permanent": true
     }
   ]
