@@ -1,8 +1,8 @@
 {
   "redirects": [
     {
-      "source": "/:path*",
-      "destination": "https://www.familyentitled.co.uk/:path*",
+      "source": "/blog/index.html",
+      "destination": "/blog/",
       "permanent": true
     }
   ]
